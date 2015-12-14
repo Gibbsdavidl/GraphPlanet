@@ -1,0 +1,8 @@
+Done:
+
+depth first search, dfs
+breadth first search, bfs
+lexographic bredth first search, lexBfs
+
+In progress:
+test_toposort
