@@ -66,22 +66,23 @@ def lexBfs(g):
 
 
 def outOnly(g):
-    vs  = set(g.getVs())
-    ins = set(g.getAllIns())
-    return(list(vs.difference(ins)))
+    outs  = set(g.getAllOuts())
+    ins   = set(g.getAllIns())
+    return(list(outs.difference(ins)))
 
 def toposort(g):
-    g2 = deepcopy(g)
+    gp = deepcopy(g)   # make our modified graph g prime.
     l = []             # will be the sorted list
-    s = outOnly(g2)     # set of nodes with no incoming edges, out only
+    s = outOnly(gp)    # set of nodes with no incoming edges, out only
+    l.append(s[0])     # and append the first to the results
     while len(s) > 0:
         si = s.pop()   # take the first one off
-        l.append(si)   # and append it to the results
-        for m in g2.neighbors(si):  # for the neighbors of si
-            g2.remEdge(si, m)       # remove edge from si to m
-            if m not in g2.getAllIns():  # if m has incoming edges
-                l.append(m)              # then put it in the solution
-    if g.hasEdges():
+        for m in gp.neighbors(si):  # for the neighbors of si
+            gp.remEdge(si, m)            # remove edge from si to m
+            if m not in gp.getAllIns():  # if m has no incoming edges
+                l.append(m)              # then put it in the solution list
+        s = outOnly(gp)    # now which nodes have no incoming edges?
+    if gp.numEdges() > 0:
         return("error")
     else:
         return(l)

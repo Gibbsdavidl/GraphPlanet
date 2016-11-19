@@ -22,6 +22,11 @@ class Graph:
         tonodes = list(self.graph.col)
         return([self.nodeids[xi] for xi in tonodes])
 
+    def getAllOuts(self):
+        # get node names with out edges
+        fromnodes = list(self.graph.row)
+        return([self.nodeids[xi] for xi in fromnodes])
+
     def getRow(self,vi):
         idx = self.matidx[vi]
         return(self.graph.getrow(idx))
@@ -94,10 +99,9 @@ class Graph:
         c = np.delete(c, idx)
         d = np.delete(d, idx)
         self.nedges -=1
-        self.nvertices -= 1
-        n = len(r)
         # UPDATE THE MATIDX AND INVERSE #
-        self.graph = coo_matrix((d,(r,c)), shape=(n,n))
+        # here the n has be be the highest node number.
+        self.graph = coo_matrix((d,(r,c)), shape=(self.nvertices,self.nvertices))
 
     def edgeList(self, filename):
         # HERE the file type is:  node  \t  node  \n

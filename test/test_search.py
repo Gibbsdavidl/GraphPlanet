@@ -36,6 +36,7 @@ class TestSearch(TestCase):
         result = search.lexBfs(self.g1)
         self.assertTrue(result == soln)
 
+
     def test_toposort(self):
         soln = ['a', 'b', 'c', 'd', 'e', 'g', 'h', 'i', 'j', 'f']
         result = search.toposort(self.g1)
